@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WayGoal | Your Goals. Your Roadmap. Your Future.</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">W</span><span>WayGoal</span></a>
+    <nav><a href="#how">How it works</a><a href="#setup">Build my roadmap</a></nav>
+    <span class="top-tag">STUDENT ROADMAP</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">YOUR PERSONAL AI STUDY COMPANION</p>
+        <h1>Your goals.<br><span>Your roadmap.</span><br>Your future.</h1>
+        <p class="hero-text">Turn your ambitions into a realistic plan. Tell WayGoal where you are today, what you want to achieve, and how much time you have.</p>
+        <a class="primary-btn" href="#setup">Create my roadmap <span>→</span></a>
+        <div class="hero-points"><span>✓ Personalized plan</span><span>✓ Flexible schedule</span><span>✓ Progress-aware</span></div>
+      </div>
+      <div class="hero-visual">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="planet"><span>W</span></div>
+        <div class="float-card card-goal"><small>YOUR GOAL</small><strong id="heroGoal">Software Developer</strong><span class="mini-line"></span></div>
+        <div class="float-card card-progress"><small>ROADMAP PROGRESS</small><strong>Stay on track</strong><div class="progress"><i></i></div><small>One step at a time</small></div>
+        <div class="spark spark-a">✦</div><div class="spark spark-b">✧</div>
+      </div>
+    </section>
+
+    <section class="steps" id="how">
+      <div><b>01</b><span><strong>Tell us about you</strong><small>Your academics, skills and schedule</small></span></div>
+      <div><b>02</b><span><strong>Choose your destination</strong><small>Define a clear goal and target date</small></span></div>
+      <div><b>03</b><span><strong>Get your roadmap</strong><small>A plan you can adapt as you grow</small></span></div>
+    </section>
+
+    <section class="setup-section" id="setup">
+      <div class="section-heading">
+        <p class="eyebrow">LET'S GET STARTED</p>
+        <h2>Build your personal roadmap</h2>
+        <p>Complete the sections below. You can update your details whenever your plans change.</p>
+      </div>
+
+      <div class="workspace">
+        <aside class="side-panel">
+          <div class="side-title">Your setup <span>4 steps</span></div>
+          <div class="side-step active" data-step="0"><b>01</b><span><strong>About you</strong><small>Personal & academic</small></span></div>
+          <div class="side-step" data-step="1"><b>02</b><span><strong>Your goal</strong><small>Where do you want to go?</small></span></div>
+          <div class="side-step" data-step="2"><b>03</b><span><strong>Your schedule</strong><small>Time & learning preferences</small></span></div>
+          <div class="side-step" data-step="3"><b>04</b><span><strong>Academic documents</strong><small>Calendar & circulars</small></span></div>
+          <div class="privacy-note">🔒 Your information stays in this local prototype on your computer.</div>
+        </aside>
+
+        <section class="form-panel">
+          <form id="waygoalForm">
+            <div class="form-step active" data-panel="0">
+              <p class="eyebrow">STEP 1 OF 4</p><h3>First, tell us about yourself</h3><p class="muted">We'll use this to understand your current academic stage.</p>
+              <div class="form-grid">
+                <label class="full">Full name *<input name="name" placeholder="e.g. Rahul Reddy" required /></label>
+                <label>Email address<input name="email" type="email" placeholder="you@example.com" /></label>
+                <label>College / University<input name="college" placeholder="Your college name" /></label>
+                <label>Degree<select name="degree"><option value="">Select degree</option><option>B.Tech</option><option>B.E.</option><option>B.Sc.</option><option>B.Com.</option><option>B.A.</option><option>M.Tech</option><option>MBA</option><option>Other</option></select></label>
+                <label>Department / Branch<input name="department" placeholder="e.g. Computer Science" /></label>
+                <label>Current studying year<select name="year"><option value="">Select year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option><option>Other</option></select></label>
+                <label>Current semester<select name="semester"><option value="">Select semester</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></label>
+                <label>Current CGPA<input name="cgpa" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.5" /></label>
+                <label>Number of active backlogs<input name="backlogs" type="number" min="0" placeholder="0" /></label>
+              </div>
+            </div>
+
+            <div class="form-step" data-panel="1">
+              <p class="eyebrow">STEP 2 OF 4</p><h3>What do you want to achieve?</h3><p class="muted">Choose a main goal. We'll tailor the plan around it.</p>
+              <div class="form-grid">
+                <label class="full">Primary goal *<select name="goal" id="goal" required><option value="">Choose your goal</option><option>Campus Placements</option><option>Government Jobs</option><option>Competitive Exams</option><option>Higher Studies</option><option>Learning New Skills</option><option>Internships</option><option>Entrepreneurship</option><option>Other</option></select></label>
+                <label>Specific target<input name="target" placeholder="e.g. Software Developer / SSC CGL" /></label>
+                <label>Target exam (if applicable)<input name="exam" placeholder="e.g. GATE, SSC CGL, CAT" /></label>
+                <label>Preferred company / institution<input name="targetOrganization" placeholder="Optional" /></label>
+                <label>Target achievement date<input name="targetDate" type="date" /></label>
+                <label class="full">Secondary goal (optional)<input name="secondaryGoal" placeholder="e.g. Improve communication skills" /></label>
+                <label class="full">What is your current preparation level?<select name="level"><option>Beginner</option><option selected>Intermediate</option><option>Advanced</option></select></label>
+              </div>
+            </div>
+
+            <div class="form-step" data-panel="2">
+              <p class="eyebrow">STEP 3 OF 4</p><h3>Let's plan around your real schedule</h3><p class="muted">A useful roadmap should fit your everyday life.</p>
+              <div class="form-grid">
+                <label>Available study hours per day *<select name="hoursPerDay" required><option value="">Choose hours</option><option value="1">1 hour</option><option value="2">2 hours</option><option value="3">3 hours</option><option value="4">4 hours</option><option value="5">5 hours</option><option value="6">6 hours</option><option value="7">7+ hours</option></select></label>
+                <label>Preferred study time<select name="studyTime"><option>Morning</option><option>Afternoon</option><option>Evening</option><option>Night</option><option>Flexible</option></select></label>
+                <label>College / work hours<input name="collegeHours" placeholder="e.g. 9 AM – 4 PM" /></label>
+                <label>Available days<select name="availableDays"><option>Monday–Friday</option><option>Monday–Saturday</option><option>All 7 days</option><option>Weekends only</option><option>Custom / varies</option></select></label>
+                <label>Weekend study time<select name="weekendHours"><option>Same as weekdays</option><option>1–2 hours</option><option>3–4 hours</option><option>5+ hours</option><option>Not available</option></select></label>
+                <label>Preferred learning format<select name="learningStyle"><option>Video lessons</option><option>Notes and reading</option><option>Hands-on practice</option><option>Combination of all</option></select></label>
+                <label class="full">Skills you already know<input name="skills" placeholder="e.g. C, Python, HTML, communication" /></label>
+                <label class="full">Topics you find difficult<textarea name="difficulties" rows="3" placeholder="Tell us where you need more support..."></textarea></label>
+                <label class="full">Other commitments<textarea name="commitments" rows="2" placeholder="Sports, part-time work, family responsibilities, etc."></textarea></label>
+              </div>
+            </div>
+
+            <div class="form-step" data-panel="3">
+              <p class="eyebrow">STEP 4 OF 4</p><h3>Bring your academic calendar</h3><p class="muted">Upload documents so WayGoal can account for important academic dates.</p>
+              <div class="upload-area"><div class="upload-icon">↑</div><strong>Upload academic documents</strong><p>Academic calendar, circulars, exam timetable, assignment deadlines and holiday list.</p><input id="documents" type="file" name="documents" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" /><label for="documents" class="upload-btn">Choose files</label><div id="fileNames" class="file-names">PDF, DOC, DOCX, JPG or PNG · Up to 10 MB per file</div></div>
+              <div class="form-grid extra-top">
+                <label>Roadmap duration<select name="duration"><option>1 month</option><option selected>3 months</option><option>6 months</option><option>Until target date</option></select></label>
+                <label>Revision preference<select name="revision"><option>Daily</option><option selected>Weekly</option><option>Before tests</option></select></label>
+                <label class="full">Anything else WayGoal should know?<textarea name="notes" rows="3" placeholder="Your challenges, preferences or expectations..."></textarea></label>
+              </div>
+              <p class="small-note">Prototype note: files are stored locally. Automatic text extraction from uploaded PDFs/DOCX and verified AI recommendations require a document-processing service and AI API connection.</p>
+            </div>
+
+            <div class="form-actions"><button type="button" class="back-btn" id="backBtn" disabled>← Back</button><span id="stepCount">Step 1 of 4</span><button type="button" class="primary-btn" id="nextBtn">Continue →</button><button type="submit" class="primary-btn hidden" id="generateBtn">Generate my roadmap ✦</button></div>
+          </form>
+        </section>
+      </div>
+    </section>
+
+    <section class="dashboard hidden" id="dashboard">
+      <div class="dashboard-head"><div><p class="eyebrow">YOUR PERSONAL PLAN</p><h2 id="welcomeTitle">Your roadmap is ready.</h2><p class="muted" id="welcomeSub"></p></div><button class="outline-btn" id="editBtn">Edit my inputs</button></div>
+      <div class="dash-stats"><div><small>DAILY STUDY TIME</small><strong id="statHours">3 hrs</strong></div><div><small>ROADMAP DURATION</small><strong id="statDuration">3 months</strong></div><div><small>MAIN GOAL</small><strong id="statGoal">Placements</strong></div></div>
+      <div class="roadmap-layout"><div class="roadmap-main"><div class="roadmap-title"><div><p class="eyebrow">YOUR ACTION PLAN</p><h3>Suggested weekly roadmap</h3></div><span class="live-pill">● PERSONALIZED</span></div><div id="taskList"></div></div><aside class="progress-panel"><h3>Your progress</h3><div class="circle-progress" id="progressCircle"><span id="progressPercent">0%</span></div><p class="muted center">Tasks completed</p><div class="progress-track"><i id="progressBar"></i></div><p class="small-note" id="progressText">Complete tasks to update your progress.</p><button class="outline-btn full-btn" id="resetProgress">Reset progress</button></aside></div>
+      <p class="disclaimer">This is a starter roadmap generated from your inputs using a simple rule-based demo. It is not yet connected to a live AI model or automatic academic-document extraction. Review dates and tasks before relying on them.</p>
+    </section>
+  </main>
+  <footer><a class="brand" href="#"><span class="brand-mark">W</span><span>WayGoal</span></a><span>Your Goals. Your Roadmap. Your Future.</span></footer>
+  <script src="app.js"></script>
+</body>
+</html>
