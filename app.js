@@ -1,6 +1,10 @@
+
+const API_URL = "https://waygoal-website.onrender.com";
+
 const form = document.getElementById("waygoalForm");
 const panels = [...document.querySelectorAll(".form-step")];
 const sideSteps = [...document.querySelectorAll(".side-step")];
+
 let currentStep = 0;
 let currentProfile = {};
 let tasks = [];
@@ -14,8 +18,10 @@ function showStep(index) {
   document.getElementById("generateBtn").classList.toggle("hidden", index !== 3);
   document.getElementById("stepCount").textContent = `Step ${index + 1} of 4`;
 }
+
 function validStep() {
   const required = [...panels[currentStep].querySelectorAll("[required]")];
+
   for (const field of required) {
     if (!field.value.trim()) {
       field.focus();
@@ -23,17 +29,25 @@ function validStep() {
       return false;
     }
   }
+
   return true;
 }
+
 document.getElementById("nextBtn").addEventListener("click", () => {
   if (validStep()) showStep(Math.min(3, currentStep + 1));
 });
-document.getElementById("backBtn").addEventListener("click", () => showStep(Math.max(0, currentStep - 1)));
+
+document.getElementById("backBtn").addEventListener("click", () => {
+  showStep(Math.max(0, currentStep - 1));
+});
+
 sideSteps.forEach((step, i) => step.addEventListener("click", () => {
   if (i <= currentStep || validStep()) showStep(i);
 }));
+
 document.getElementById("documents").addEventListener("change", e => {
   const files = [...e.target.files];
+
   document.getElementById("fileNames").textContent = files.length
     ? files.map(f => `${f.name} (${(f.size / 1024 / 1024).toFixed(1)} MB)`).join(" · ")
     : "PDF, DOC, DOCX, JPG or PNG · Up to 10 MB per file";
@@ -44,7 +58,9 @@ function makeTasks(profile) {
   const level = profile.level || "Intermediate";
   const hours = Number(profile.hoursPerDay || 2);
   const timeFactor = hours >= 4 ? "60–90 minutes" : hours >= 2 ? "30–45 minutes" : "20–30 minutes";
+
   let focus = [];
+
   if (goal.includes("government") || goal.includes("competitive")) {
     focus = [
       ["Understand the exam pattern", "Review the official syllabus, stages, marking scheme and eligibility for your target exam."],
@@ -91,6 +107,7 @@ function makeTasks(profile) {
       ["Set next week's priorities", "Choose the next topics and adjust your schedule realistically."]
     ];
   }
+
   return focus.map((item, i) => ({
     title: item[0],
     description: `${item[1]} Suggested daily focus: ${timeFactor}.`,
@@ -102,78 +119,129 @@ function makeTasks(profile) {
 function updateProgress() {
   const done = tasks.filter(t => t.done).length;
   const pct = tasks.length ? Math.round(done / tasks.length * 100) : 0;
+
   document.getElementById("progressPercent").textContent = `${pct}%`;
   document.getElementById("progressBar").style.width = `${pct}%`;
-  document.getElementById("progressCircle").style.background = `conic-gradient(#8b5cf6 ${pct * 3.6}deg,#29345b 0deg)`;
-  document.getElementById("progressText").textContent = `${done} of ${tasks.length} weekly focus areas completed.`;
+  document.getElementById("progressCircle").style.background =
+    `conic-gradient(#8b5cf6 ${pct * 3.6}deg,#29345b 0deg)`;
+  document.getElementById("progressText").textContent =
+    `${done} of ${tasks.length} weekly focus areas completed.`;
 }
+
 function renderTasks() {
   const list = document.getElementById("taskList");
   list.innerHTML = "";
+
   tasks.forEach((task, index) => {
     const row = document.createElement("label");
     row.className = `task ${task.done ? "done" : ""}`;
+
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
     checkbox.checked = task.done;
+
     checkbox.addEventListener("change", () => {
       tasks[index].done = checkbox.checked;
       row.classList.toggle("done", checkbox.checked);
       updateProgress();
     });
+
     const content = document.createElement("div");
+
     const title = document.createElement("strong");
     title.textContent = task.title;
+
     const desc = document.createElement("p");
     desc.textContent = task.description;
+
     content.append(title, desc);
+
     const tag = document.createElement("span");
     tag.className = "task-tag";
     tag.textContent = task.tag;
+
     row.append(checkbox, content, tag);
     list.appendChild(row);
   });
 }
+
 form.addEventListener("submit", async e => {
   e.preventDefault();
+
   if (!validStep()) return;
+
   const data = new FormData(form);
   currentProfile = Object.fromEntries(data.entries());
+
   const fileInput = document.getElementById("documents");
+
   try {
-    const response = await fetch("/api/profile", {
-      method: "POST", headers: {"Content-Type":"application/json"},
+    const response = await fetch(`${API_URL}/api/profile`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(currentProfile)
     });
-    if (!response.ok) throw new Error("Could not save profile");
+
+    if (!response.ok) {
+      throw new Error("Could not save profile");
+    }
+
     if (fileInput.files.length) {
       const uploads = new FormData();
-      [...fileInput.files].forEach(file => uploads.append("documents", file));
-      const uploadResponse = await fetch("/api/uploads", {method:"POST", body:uploads});
-      if (!uploadResponse.ok) throw new Error("Profile saved, but document upload failed. Check file type and size.");
+
+      [...fileInput.files].forEach(file => {
+        uploads.append("documents", file);
+      });
+
+      const uploadResponse = await fetch(`${API_URL}/api/uploads`, {
+        method: "POST",
+        body: uploads
+      });
+
+      if (!uploadResponse.ok) {
+        throw new Error("Profile saved, but document upload failed. Check file type and size.");
+      }
     }
+
   } catch (err) {
     alert(`${err.message}. Make sure the WayGoal server is running.`);
     return;
   }
+
   tasks = makeTasks(currentProfile);
   renderTasks();
-  document.getElementById("welcomeTitle").textContent = `Your roadmap, ${currentProfile.name.split(" ")[0]}, starts here.`;
-  document.getElementById("welcomeSub").textContent = `A starter plan for ${currentProfile.target || currentProfile.goal}. Adjust it as you make progress.`;
-  document.getElementById("statHours").textContent = `${currentProfile.hoursPerDay} hrs/day`;
-  document.getElementById("statDuration").textContent = currentProfile.duration || "3 months";
+
+  document.getElementById("welcomeTitle").textContent =
+    `Your roadmap, ${currentProfile.name.split(" ")[0]}, starts here.`;
+
+  document.getElementById("welcomeSub").textContent =
+    `A starter plan for ${currentProfile.target || currentProfile.goal}. Adjust it as you make progress.`;
+
+  document.getElementById("statHours").textContent =
+    `${currentProfile.hoursPerDay} hrs/day`;
+
+  document.getElementById("statDuration").textContent =
+    currentProfile.duration || "3 months";
+
   document.getElementById("statGoal").textContent = currentProfile.goal;
-  document.getElementById("heroGoal").textContent = currentProfile.target || currentProfile.goal;
+
+  document.getElementById("heroGoal").textContent =
+    currentProfile.target || currentProfile.goal;
+
   document.getElementById("dashboard").classList.remove("hidden");
-  document.getElementById("dashboard").scrollIntoView({behavior:"smooth"});
+  document.getElementById("dashboard").scrollIntoView({ behavior: "smooth" });
+
   updateProgress();
 });
+
 document.getElementById("editBtn").addEventListener("click", () => {
   document.getElementById("dashboard").classList.add("hidden");
-  document.getElementById("setup").scrollIntoView({behavior:"smooth"});
+  document.getElementById("setup").scrollIntoView({ behavior: "smooth" });
   showStep(0);
 });
+
 document.getElementById("resetProgress").addEventListener("click", () => {
   tasks.forEach(t => t.done = false);
-  renderTasks(); updateProgress();
+  renderTasks();
+  updateProgress();
 });
